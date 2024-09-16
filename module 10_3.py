@@ -29,7 +29,7 @@ class Bank:
                 with self.lock:
                     self.balance -= amount
                     print(f"Снятие: {amount}. Баланс: {self.balance}")
-            if amount >= self.balance:
+            else:
                 print("Запрос отклонён, недостаточно средств")
                 self.lock.acquire()
 
