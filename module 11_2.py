@@ -1,7 +1,7 @@
 def introspection_info(obj):
     result = {
         'Тип объекта': type(obj).__name__,
-        'Атрибуты объекта': dir(obj),
+        'Атрибуты объекта': [attr for attr in dir(obj) if not attr.startswith('__')],
         'Методы объекта': [method for method in dir(type(obj)) if callable(getattr(type(obj), method))],
         'Модуль, к которому принадлежит класс объекта': obj.__class__.__module__
     }
