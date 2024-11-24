@@ -33,6 +33,19 @@ async def get_user_page(request: Request,
     raise HTTPException(status_code=404, detail="User was not found")
 
 
+@app.post('/user/{username}/{age}')
+async def user_register(user: User, username: str, age: int):
+    len_user = len(users)
+    if len_user == 0:
+        user.id = 1
+    else:
+        user.id = users[len_user - 1].id + 1
+    user.username = username
+    user.age = age
+    users.append(user)
+    return user
+
+
 @app.put("/user/{user_id}/{username}/{age}")
 async def update_user(
         user_id: Annotated[int, Path(ge=1, le=100,
