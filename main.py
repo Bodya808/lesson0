@@ -1,34 +1,21 @@
-print(len('luboe slovo'))
+from fastapi import FastAPI
+from app.routers import task as task_router
+from app.routers import user as user_router
+import uvicorn
+import asyncio
 
 
-first = 10
-second = 20
-summa = first + second
-diff = first - second
-print (summa)
-print (diff)
+app = FastAPI()
 
 
-first = 5, 5, 3
-second = 7, 1, 4
-third = 2, 6, 8
-mean = first + second + third
-mean = sum(mean) / len(mean)
-print (mean)
+@app.get("/")
+async def root():
+    return {"message": "Welcome to Taskmanager"}
 
 
-first_string = 'Вторник'
-second_string = 'Понедельник'
-print (second_string + ', ' + first_string)
+app.include_router(task_router)
+app.include_router(user_router)
 
 
-a = 2
-b = 4
-c = 7
-f = (a * b) + (a * c)
-print (f)
-f = 22 **3 / 2
-print (f)
-
-
-
+if __name__ == "main":
+    asyncio.run(uvicorn.run(app, host="127.0.0.1", port=8000, loop="asyncio"))
